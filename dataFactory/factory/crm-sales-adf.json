@@ -1,0 +1,9 @@
+{
+	"name": "crm-sales-adf",
+	"location": "uksouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "e647b3b1-edcb-468b-8bfb-00a1719450c6",
+		"tenantId": "42eee4e2-6bb8-4a9a-8950-86f7a07ce4d0"
+	}
+}
