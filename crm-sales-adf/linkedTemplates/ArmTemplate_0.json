@@ -718,6 +718,30 @@
 								"dependencyConditions": [
 									"Failed"
 								]
+							},
+							{
+								"activity": "sales_pipeline",
+								"dependencyConditions": [
+									"Failed"
+								]
+							},
+							{
+								"activity": "products",
+								"dependencyConditions": [
+									"Failed"
+								]
+							},
+							{
+								"activity": "data_dictionary",
+								"dependencyConditions": [
+									"Failed"
+								]
+							},
+							{
+								"activity": "accounts",
+								"dependencyConditions": [
+									"Failed"
+								]
 							}
 						],
 						"policy": {
