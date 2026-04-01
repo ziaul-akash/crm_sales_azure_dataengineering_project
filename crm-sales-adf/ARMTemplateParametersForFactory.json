@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "crm-sales-adf"
+		},
+		"ls_FileLocation_password": {
+			"value": ""
+		},
+		"ls_sinkDataToAdls2_accountKey": {
+			"value": ""
+		},
+		"ls_FileLocation_properties_typeProperties_host": {
+			"value": "D:\\AZURE\\CRM_Sales_Azure_Dataengineering_Project"
+		},
+		"ls_FileLocation_properties_typeProperties_userId": {
+			"value": "admin"
+		},
+		"ls_sinkDataToAdls2_properties_typeProperties_url": {
+			"value": "https://crmsalesuksouthadls2.dfs.core.windows.net/"
+		}
+	}
+}
