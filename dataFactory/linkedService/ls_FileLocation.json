@@ -1,0 +1,17 @@
+{
+	"name": "ls_FileLocation",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "FileServer",
+		"typeProperties": {
+			"host": "D:\\AZURE\\CRM_Sales_Azure_Dataengineering_Project",
+			"userId": "casually.ur68000@gmail.com",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIwYWI5N2ZkNC01Y2M1LTQxZjEtYWRiYS0wNDZlNDViMGVkODAiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "onPremtoAzureIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
