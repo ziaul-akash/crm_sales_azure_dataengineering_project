@@ -220,7 +220,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "FileServerLocation",
-						"fileName": "products.csv"
+						"fileName": "products1.csv"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
