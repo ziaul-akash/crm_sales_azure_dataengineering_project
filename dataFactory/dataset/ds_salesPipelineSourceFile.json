@@ -1,5 +1,5 @@
 {
-	"name": "ds_accountSourceFile",
+	"name": "ds_salesPipelineSourceFile",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_FileLocation",
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "FileServerLocation",
-				"fileName": "accounts.csv"
+				"fileName": "sales_pipeline.csv"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
@@ -19,31 +19,35 @@
 		},
 		"schema": [
 			{
+				"name": "opportunity_id",
+				"type": "String"
+			},
+			{
+				"name": "sales_agent",
+				"type": "String"
+			},
+			{
+				"name": "product",
+				"type": "String"
+			},
+			{
 				"name": "account",
 				"type": "String"
 			},
 			{
-				"name": "sector",
+				"name": "deal_stage",
 				"type": "String"
 			},
 			{
-				"name": "year_established",
+				"name": "engage_date",
 				"type": "String"
 			},
 			{
-				"name": "revenue",
+				"name": "close_date",
 				"type": "String"
 			},
 			{
-				"name": "employees",
-				"type": "String"
-			},
-			{
-				"name": "office_location",
-				"type": "String"
-			},
-			{
-				"name": "subsidiary_of",
+				"name": "close_value",
 				"type": "String"
 			}
 		]

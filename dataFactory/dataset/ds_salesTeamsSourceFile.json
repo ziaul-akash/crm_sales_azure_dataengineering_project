@@ -1,5 +1,5 @@
 {
-	"name": "ds_accountSourceFile",
+	"name": "ds_salesTeamsSourceFile",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_FileLocation",
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "FileServerLocation",
-				"fileName": "accounts.csv"
+				"fileName": "sales_teams.csv"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
@@ -19,31 +19,15 @@
 		},
 		"schema": [
 			{
-				"name": "account",
+				"name": "sales_agent",
 				"type": "String"
 			},
 			{
-				"name": "sector",
+				"name": "manager",
 				"type": "String"
 			},
 			{
-				"name": "year_established",
-				"type": "String"
-			},
-			{
-				"name": "revenue",
-				"type": "String"
-			},
-			{
-				"name": "employees",
-				"type": "String"
-			},
-			{
-				"name": "office_location",
-				"type": "String"
-			},
-			{
-				"name": "subsidiary_of",
+				"name": "regional_office",
 				"type": "String"
 			}
 		]

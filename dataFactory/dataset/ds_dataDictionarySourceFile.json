@@ -1,5 +1,5 @@
 {
-	"name": "ds_accountSourceFile",
+	"name": "ds_dataDictionarySourceFile",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_FileLocation",
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "FileServerLocation",
-				"fileName": "accounts.csv"
+				"fileName": "data_dictionary.csv"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
@@ -19,31 +19,15 @@
 		},
 		"schema": [
 			{
-				"name": "account",
+				"name": "Table",
 				"type": "String"
 			},
 			{
-				"name": "sector",
+				"name": "Field",
 				"type": "String"
 			},
 			{
-				"name": "year_established",
-				"type": "String"
-			},
-			{
-				"name": "revenue",
-				"type": "String"
-			},
-			{
-				"name": "employees",
-				"type": "String"
-			},
-			{
-				"name": "office_location",
-				"type": "String"
-			},
-			{
-				"name": "subsidiary_of",
+				"name": "Description",
 				"type": "String"
 			}
 		]
