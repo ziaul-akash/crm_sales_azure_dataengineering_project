@@ -33,16 +33,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/onPremtoAzureIntegrationRuntime')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "SelfHosted",
-				"typeProperties": {}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/ls_sinkDataToAdls2')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -60,28 +50,14 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ls_FileLocation')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"name": "[concat(parameters('factoryName'), '/onPremtoAzureIntegrationRuntime')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"annotations": [],
-				"type": "FileServer",
-				"typeProperties": {
-					"host": "[parameters('ls_FileLocation_properties_typeProperties_host')]",
-					"userId": "[parameters('ls_FileLocation_properties_typeProperties_userId')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('ls_FileLocation_password')]"
-					}
-				},
-				"connectVia": {
-					"referenceName": "onPremtoAzureIntegrationRuntime",
-					"type": "IntegrationRuntimeReference"
-				}
+				"type": "SelfHosted",
+				"typeProperties": {}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/onPremtoAzureIntegrationRuntime')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ds_sinkToAdls2')]",
@@ -108,6 +84,30 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ls_sinkDataToAdls2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_FileLocation')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "FileServer",
+				"typeProperties": {
+					"host": "[parameters('ls_FileLocation_properties_typeProperties_host')]",
+					"userId": "[parameters('ls_FileLocation_properties_typeProperties_userId')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('ls_FileLocation_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "onPremtoAzureIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/onPremtoAzureIntegrationRuntime')]"
 			]
 		},
 		{
@@ -679,6 +679,64 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "successful",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "sales_teams",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"method": "POST",
+							"headers": {},
+							"url": "https://prod-41.uksouth.logic.azure.com:443/workflows/405f462081924ec6a9bfbb337c932059/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=dVBZ6UvE1wj_7wQwjSG4rCnTtYotu66DKQwAVxj2hRE",
+							"body": {
+								"value": "\"pipelineName\" : \"@{pipeline().Pipeline}\",\n\"status\" : \"Successful\",\n\"runId\": \"@{pipeline().RunId}\",\n\"time\" : \"@{utcNow()}\"\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Failed",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "sales_teams",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"method": "POST",
+							"headers": {},
+							"url": "https://prod-41.uksouth.logic.azure.com:443/workflows/405f462081924ec6a9bfbb337c932059/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=dVBZ6UvE1wj_7wQwjSG4rCnTtYotu66DKQwAVxj2hRE",
+							"body": {
+								"value": "\"pipelineName\" : \"@{pipeline().Pipeline}\",\n\"status\" : \"Failed\",\n\"runId\": \"@{pipeline().RunId}\",\n\"time\" : \"@{utcNow()}\"\n",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"policy": {
