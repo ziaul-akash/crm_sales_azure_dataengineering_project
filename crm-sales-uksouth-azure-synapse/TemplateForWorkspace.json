@@ -1,0 +1,137 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"workspaceName": {
+			"type": "string",
+			"metadata": "Workspace name",
+			"defaultValue": "crm-sales-uksouth-azure-synapse"
+		},
+		"crm-sales-uksouth-azure-synapse-WorkspaceDefaultSqlServer_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'crm-sales-uksouth-azure-synapse-WorkspaceDefaultSqlServer'",
+			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:crm-sales-uksouth-azure-synapse.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
+		},
+		"crm-sales-uksouth-azure-synapse-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://crmsalesuksouthadls2.dfs.core.windows.net"
+		}
+	},
+	"variables": {
+		"workspaceId": "[concat('Microsoft.Synapse/workspaces/', parameters('workspaceName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('workspaceName'), '/crm-sales-uksouth-azure-synapse-WorkspaceDefaultSqlServer')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"parameters": {
+					"DBName": {
+						"type": "String"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlDW",
+				"typeProperties": {
+					"connectionString": "[parameters('crm-sales-uksouth-azure-synapse-WorkspaceDefaultSqlServer_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/crm-sales-uksouth-azure-synapse-WorkspaceDefaultStorage')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('crm-sales-uksouth-azure-synapse-WorkspaceDefaultStorage_properties_typeProperties_url')]"
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/AutoResolveIntegrationRuntime')]",
+			"type": "Microsoft.Synapse/workspaces/integrationRuntimes",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "AutoResolve",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 8,
+							"timeToLive": 0
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/WorkspaceSystemIdentity')]",
+			"type": "Microsoft.Synapse/workspaces/credentials",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"type": "ManagedIdentity",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 1')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "SELECT * FROM dbo.vwSalesPipeline",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "crm_sales_db",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/creating_view')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "CREATE VIEW dbo.vwAccounts AS\nSELECT * FROM OPENROWSET(\n    BULK 'https://crmsalesuksouthadls2.dfs.core.windows.net/transformed-data/accounts/part-00000-tid-3466074122307942658-c08a1828-eb1f-4ba6-8477-d474174fea5e-76-1-c000.csv',\n    FORMAT ='CSV',\n    PARSER_VERSION = '2.0',\n    HEADER_ROW  = TRUE\n) AS crm_sales\n\nCREATE VIEW dbo.vwDataDictionary AS\nSELECT * FROM OPENROWSET(\n    BULK 'https://crmsalesuksouthadls2.dfs.core.windows.net/transformed-data/data_dictionary/part-00000-tid-7546971791739730160-4580dd92-3866-4da4-b033-891fb0143efe-77-1-c000.csv',\n    FORMAT ='CSV',\n    PARSER_VERSION = '2.0',\n    HEADER_ROW  = TRUE,\n    FIELDTERMINATOR = ',',\n    FIELDQUOTE= ''\n) AS crm_sales\n\n\nCREATE VIEW dbo.vwProducts AS\nSELECT * FROM OPENROWSET(\n    BULK 'https://crmsalesuksouthadls2.dfs.core.windows.net/transformed-data/products/part-00000-tid-3940590806710983783-314c97da-c710-4e38-8785-90de915709fa-78-1-c000.csv',\n    FORMAT ='CSV',\n    PARSER_VERSION = '2.0',\n    HEADER_ROW  = TRUE\n) AS crm_sales\n\nCREATE VIEW dbo.vwSalesPipeline AS\nSELECT * FROM OPENROWSET(\n    BULK 'https://crmsalesuksouthadls2.dfs.core.windows.net/transformed-data/sales_pipeline/part-00000-tid-8206082406034739231-2ef0e236-ee12-494a-b0bb-c5e2794ff565-79-1-c000.csv',\n    FORMAT ='CSV',\n    PARSER_VERSION = '2.0',\n    HEADER_ROW  = TRUE\n) AS crm_sales\n\nCREATE VIEW dbo.vwSalesTeams AS\nSELECT * FROM OPENROWSET(\n    BULK 'https://crmsalesuksouthadls2.dfs.core.windows.net/transformed-data/sales_teams/part-00000-tid-5469347893168880275-9e9cb853-79cd-4018-9ced-a3a16143d99e-80-1-c000.csv',\n    FORMAT ='CSV',\n    PARSER_VERSION = '2.0',\n    HEADER_ROW  = TRUE\n) AS crm_sales\n\n\n\n\n",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "crm_sales_db",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		}
+	]
+}
