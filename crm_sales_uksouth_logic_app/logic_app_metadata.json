@@ -1,0 +1,243 @@
+{
+    "apiVersion": "2019-05-01",
+    "id": "/subscriptions/d69bf492-510f-4750-95fe-7a897a9bb7f6/resourceGroups/crm_sales_uksouth_rg/providers/Microsoft.Logic/workflows/crm_sales_uksouth_logic_app",
+    "name": "crm_sales_uksouth_logic_app",
+    "type": "microsoft.logic/workflows",
+    "location": "uksouth",
+    "tags": {},
+    "properties": {
+        "provisioningState": "Succeeded",
+        "createdTime": "2026-04-01T22:35:01.0520019Z",
+        "changedTime": "2026-04-01T23:00:54.5865424Z",
+        "state": "Enabled",
+        "version": "08584265224308994353",
+        "accessEndpoint": "https://prod-41.uksouth.logic.azure.com:443/workflows/405f462081924ec6a9bfbb337c932059",
+        "definition": {
+            "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+            "contentVersion": "1.0.0.0",
+            "parameters": {
+                "$connections": {
+                    "defaultValue": {},
+                    "type": "Object"
+                }
+            },
+            "triggers": {
+                "When_an_HTTP_request_is_received": {
+                    "type": "Request",
+                    "kind": "Http",
+                    "inputs": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "pipelineName": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "runId": {
+                                    "type": "string"
+                                },
+                                "time": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "actions": {
+                "Send_email_(V2)": {
+                    "runAfter": {},
+                    "type": "ApiConnection",
+                    "inputs": {
+                        "host": {
+                            "connection": {
+                                "name": "@parameters('$connections')['gmail']['connectionId']"
+                            }
+                        },
+                        "method": "post",
+                        "body": {
+                            "To": "unseen.book966@gmail.com",
+                            "Subject": "CRM_Sales Pipeline Run Report",
+                            "Body": "<p class=\"editor-paragraph\">Pipeline details:<br><br>Name: @{triggerBody()?['pipelineName']}</p><p class=\"editor-paragraph\">Status: @{triggerBody()?['status']}</p><p class=\"editor-paragraph\">RunId: @{triggerBody()?['runId']}</p><p class=\"editor-paragraph\">Time: @{triggerBody()?['time']}</p>"
+                        },
+                        "path": "/v2/Mail"
+                    }
+                }
+            },
+            "outputs": {}
+        },
+        "parameters": {
+            "$connections": {
+                "value": {
+                    "gmail": {
+                        "id": "/subscriptions/d69bf492-510f-4750-95fe-7a897a9bb7f6/providers/Microsoft.Web/locations/uksouth/managedApis/gmail",
+                        "connectionId": "/subscriptions/d69bf492-510f-4750-95fe-7a897a9bb7f6/resourceGroups/crm_sales_uksouth_rg/providers/Microsoft.Web/connections/gmail",
+                        "connectionName": "gmail",
+                        "connectionProperties": {}
+                    }
+                }
+            }
+        },
+        "endpointsConfiguration": {
+            "workflow": {
+                "outgoingIpAddresses": [
+                    {
+                        "address": "20.108.102.123"
+                    },
+                    {
+                        "address": "20.90.204.188"
+                    },
+                    {
+                        "address": "20.90.223.4"
+                    },
+                    {
+                        "address": "20.26.15.70"
+                    },
+                    {
+                        "address": "20.26.13.151"
+                    },
+                    {
+                        "address": "4.159.24.241"
+                    },
+                    {
+                        "address": "4.250.55.134"
+                    },
+                    {
+                        "address": "4.159.24.255"
+                    },
+                    {
+                        "address": "4.250.55.217"
+                    },
+                    {
+                        "address": "172.165.88.82"
+                    },
+                    {
+                        "address": "4.250.82.111"
+                    },
+                    {
+                        "address": "4.158.106.101"
+                    },
+                    {
+                        "address": "4.158.105.106"
+                    },
+                    {
+                        "address": "4.250.51.127"
+                    },
+                    {
+                        "address": "4.250.49.230"
+                    },
+                    {
+                        "address": "4.159.26.128"
+                    },
+                    {
+                        "address": "172.166.86.30"
+                    },
+                    {
+                        "address": "4.159.26.151"
+                    },
+                    {
+                        "address": "4.159.26.77"
+                    },
+                    {
+                        "address": "4.159.59.140"
+                    },
+                    {
+                        "address": "4.159.59.13"
+                    },
+                    {
+                        "address": "85.210.65.206"
+                    },
+                    {
+                        "address": "85.210.120.102"
+                    },
+                    {
+                        "address": "4.159.57.40"
+                    },
+                    {
+                        "address": "85.210.66.97"
+                    },
+                    {
+                        "address": "20.117.192.192"
+                    }
+                ],
+                "accessEndpointIpAddresses": [
+                    {
+                        "address": "20.254.10.157"
+                    },
+                    {
+                        "address": "4.159.25.35"
+                    },
+                    {
+                        "address": "4.159.25.50"
+                    },
+                    {
+                        "address": "4.250.87.43"
+                    },
+                    {
+                        "address": "4.158.106.183"
+                    },
+                    {
+                        "address": "4.250.53.153"
+                    },
+                    {
+                        "address": "4.159.26.160"
+                    },
+                    {
+                        "address": "4.159.25.103"
+                    },
+                    {
+                        "address": "4.159.59.224"
+                    },
+                    {
+                        "address": "4.158.138.59"
+                    },
+                    {
+                        "address": "85.210.163.36"
+                    },
+                    {
+                        "address": "85.210.34.209"
+                    },
+                    {
+                        "address": "85.210.36.40"
+                    },
+                    {
+                        "address": "85.210.185.43"
+                    }
+                ]
+            },
+            "connector": {
+                "outgoingIpAddresses": [
+                    {
+                        "address": "51.140.74.150"
+                    },
+                    {
+                        "address": "51.140.80.51"
+                    },
+                    {
+                        "address": "51.140.61.124"
+                    },
+                    {
+                        "address": "51.105.77.96/27"
+                    },
+                    {
+                        "address": "51.140.148.0/28"
+                    },
+                    {
+                        "address": "20.90.129.0/27"
+                    },
+                    {
+                        "address": "20.90.129.32/28"
+                    },
+                    {
+                        "address": "20.90.125.211"
+                    },
+                    {
+                        "address": "20.90.124.134"
+                    }
+                ]
+            }
+        }
+    }
+}
