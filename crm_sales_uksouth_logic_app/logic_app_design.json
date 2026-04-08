@@ -1,0 +1,71 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "contentVersion": "1.0.0.0",
+        "triggers": {
+            "When_an_HTTP_request_is_received": {
+                "type": "Request",
+                "kind": "Http",
+                "inputs": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "pipelineName": {
+                                "type": "string"
+                            },
+                            "status": {
+                                "type": "string"
+                            },
+                            "runId": {
+                                "type": "string"
+                            },
+                            "time": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "actions": {
+            "Send_email_(V2)": {
+                "type": "ApiConnection",
+                "inputs": {
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['gmail']['connectionId']"
+                        }
+                    },
+                    "method": "post",
+                    "body": {
+                        "To": "unseen.book966@gmail.com",
+                        "Subject": "CRM_Sales Pipeline Run Report",
+                        "Body": "<p class=\"editor-paragraph\">Pipeline details:<br><br>Name: @{triggerBody()?['pipelineName']}</p><p class=\"editor-paragraph\">Status: @{triggerBody()?['status']}</p><p class=\"editor-paragraph\">RunId: @{triggerBody()?['runId']}</p><p class=\"editor-paragraph\">Time: @{triggerBody()?['time']}</p>"
+                    },
+                    "path": "/v2/Mail"
+                },
+                "runAfter": {}
+            }
+        },
+        "outputs": {},
+        "parameters": {
+            "$connections": {
+                "type": "Object",
+                "defaultValue": {}
+            }
+        }
+    },
+    "parameters": {
+        "$connections": {
+            "type": "Object",
+            "value": {
+                "gmail": {
+                    "id": "/subscriptions/d69bf492-510f-4750-95fe-7a897a9bb7f6/providers/Microsoft.Web/locations/uksouth/managedApis/gmail",
+                    "connectionId": "/subscriptions/d69bf492-510f-4750-95fe-7a897a9bb7f6/resourceGroups/crm_sales_uksouth_rg/providers/Microsoft.Web/connections/gmail",
+                    "connectionName": "gmail",
+                    "connectionProperties": {}
+                }
+            }
+        }
+    }
+}

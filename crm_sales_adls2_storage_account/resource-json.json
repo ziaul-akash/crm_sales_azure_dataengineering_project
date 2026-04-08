@@ -1,0 +1,72 @@
+{
+    "apiVersion": "2025-08-01",
+    "id": "/subscriptions/d69bf492-510f-4750-95fe-7a897a9bb7f6/resourceGroups/crm_sales_uksouth_rg/providers/Microsoft.Storage/storageAccounts/crmsalesuksouthadls2",
+    "name": "crmsalesuksouthadls2",
+    "type": "microsoft.storage/storageaccounts",
+    "sku": {
+        "name": "Standard_LRS",
+        "tier": "Standard"
+    },
+    "kind": "StorageV2",
+    "location": "uksouth",
+    "tags": {},
+    "properties": {
+        "allowCrossTenantDelegationSas": false,
+        "dualStackEndpointPreference": {
+            "defaultDualStackEndpoints": false,
+            "publishIpv4Endpoint": false,
+            "publishIpv6Endpoint": false
+        },
+        "dnsEndpointType": "Standard",
+        "defaultToOAuthAuthentication": false,
+        "publicNetworkAccess": "Enabled",
+        "keyCreationTime": {
+            "key1": "2026-03-31T09:35:53.290477Z",
+            "key2": "2026-03-31T09:35:53.290477Z"
+        },
+        "allowCrossTenantReplication": false,
+        "privateEndpointConnections": [],
+        "isSftpEnabled": false,
+        "minimumTlsVersion": "TLS1_2",
+        "allowBlobPublicAccess": false,
+        "allowSharedKeyAccess": true,
+        "isHnsEnabled": true,
+        "networkAcls": {
+            "ipv6Rules": [],
+            "bypass": "AzureServices",
+            "virtualNetworkRules": [],
+            "ipRules": [],
+            "defaultAction": "Allow"
+        },
+        "supportsHttpsTrafficOnly": true,
+        "encryption": {
+            "requireInfrastructureEncryption": false,
+            "services": {
+                "file": {
+                    "keyType": "Account",
+                    "enabled": true,
+                    "lastEnabledTime": "2026-03-31T09:35:53.2997135Z"
+                },
+                "blob": {
+                    "keyType": "Account",
+                    "enabled": true,
+                    "lastEnabledTime": "2026-03-31T09:35:53.2997135Z"
+                }
+            },
+            "keySource": "Microsoft.Storage"
+        },
+        "accessTier": "Hot",
+        "provisioningState": "Succeeded",
+        "creationTime": "2026-03-31T09:35:53.0682203Z",
+        "primaryEndpoints": {
+            "dfs": "https://crmsalesuksouthadls2.dfs.core.windows.net/",
+            "web": "https://crmsalesuksouthadls2.z33.web.core.windows.net/",
+            "blob": "https://crmsalesuksouthadls2.blob.core.windows.net/",
+            "queue": "https://crmsalesuksouthadls2.queue.core.windows.net/",
+            "table": "https://crmsalesuksouthadls2.table.core.windows.net/",
+            "file": "https://crmsalesuksouthadls2.file.core.windows.net/"
+        },
+        "primaryLocation": "uksouth",
+        "statusOfPrimary": "available"
+    }
+}

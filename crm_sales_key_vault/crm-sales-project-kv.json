@@ -1,0 +1,96 @@
+{
+    "apiVersion": "2026-02-01",
+    "id": "/subscriptions/d69bf492-510f-4750-95fe-7a897a9bb7f6/resourceGroups/crm_sales_uksouth_rg/providers/Microsoft.KeyVault/vaults/crm-sales-project-kv",
+    "name": "crm-sales-project-kv",
+    "type": "microsoft.keyvault/vaults",
+    "location": "uksouth",
+    "tags": {},
+    "properties": {
+        "sku": {
+            "family": "A",
+            "name": "standard"
+        },
+        "tenantId": "42eee4e2-6bb8-4a9a-8950-86f7a07ce4d0",
+        "networkAcls": {
+            "bypass": "None",
+            "defaultAction": "Allow",
+            "ipRules": [],
+            "virtualNetworkRules": []
+        },
+        "accessPolicies": [
+            {
+                "tenantId": "42eee4e2-6bb8-4a9a-8950-86f7a07ce4d0",
+                "objectId": "883d2b76-2075-4f74-ab9d-18617010a6ed",
+                "permissions": {
+                    "keys": [
+                        "Get",
+                        "List",
+                        "Update",
+                        "Create",
+                        "Import",
+                        "Delete",
+                        "Recover",
+                        "Backup",
+                        "Restore",
+                        "GetRotationPolicy",
+                        "SetRotationPolicy",
+                        "Rotate"
+                    ],
+                    "secrets": [
+                        "Get",
+                        "List",
+                        "Set",
+                        "Delete",
+                        "Recover",
+                        "Backup",
+                        "Restore"
+                    ],
+                    "certificates": [
+                        "Get",
+                        "List",
+                        "Update",
+                        "Create",
+                        "Import",
+                        "Delete",
+                        "Recover",
+                        "Backup",
+                        "Restore",
+                        "ManageContacts",
+                        "ManageIssuers",
+                        "GetIssuers",
+                        "ListIssuers",
+                        "SetIssuers",
+                        "DeleteIssuers"
+                    ]
+                }
+            },
+            {
+                "tenantId": "42eee4e2-6bb8-4a9a-8950-86f7a07ce4d0",
+                "objectId": "65cac402-658e-4c08-b38c-ee1d2aced8a2",
+                "permissions": {
+                    "secrets": [
+                        "get",
+                        "list"
+                    ]
+                }
+            }
+        ],
+        "enabledForDeployment": false,
+        "enabledForDiskEncryption": false,
+        "enabledForTemplateDeployment": false,
+        "enableSoftDelete": true,
+        "softDeleteRetentionInDays": 7,
+        "enableRbacAuthorization": false,
+        "vaultUri": "https://crm-sales-project-kv.vault.azure.net/",
+        "provisioningState": "Succeeded",
+        "publicNetworkAccess": "Enabled"
+    },
+    "systemData": {
+        "createdBy": "unseen.book966@gmail.com",
+        "createdByType": "User",
+        "createdAt": "2026-04-07T11:40:37.668Z",
+        "lastModifiedBy": "unseen.book966@gmail.com",
+        "lastModifiedByType": "User",
+        "lastModifiedAt": "2026-04-07T12:30:06.513Z"
+    }
+}
